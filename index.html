@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="css/aos.css">
 
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/formiojs@latest/dist/formio.full.min.css">
+    <script src="https://unpkg.com/formiojs@latest/dist/formio.full.min.js"></script>
     
   </head>
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -350,41 +352,7 @@ implementation of algorithms. Unix-like operating systems: History, operating sy
             <h2 class="section-title text-center mb-5">Contact Form</h2>
           </div>
         </div>
-        <form action="#" class="form">
-          <div class="row mb-4">
-            <div class="form-group col-6">
-              <input type="text" class="form-control" placeholder="First name">
-            </div>
-            <div class="form-group col-6">
-              <input type="text" class="form-control" placeholder="Last name">
-            </div>
-          </div>
-
-          <div class="row mb-4">
-            <div class="form-group col-12">
-              <input type="email" class="form-control" placeholder="Email address">
-            </div>
-          </div>
-
-          <div class="row mb-4">
-            <div class="form-group col-12">
-              <input type="text" class="form-control" placeholder="Subject of the message">
-            </div>
-          </div>
-
-          <div class="row mb-4">
-            <div class="form-group col-12">
-              <textarea name="" id="" cols="30" rows="10" class="form-control" placeholder="Type your message here.."></textarea>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6">
-              <input type="submit" class="btn btn-primary" value="Send Message">
-            </div>
-          </div>
-          
-        </form>
+        <div id="formio"></div>
       </div>
     </section>
 
@@ -460,6 +428,11 @@ implementation of algorithms. Unix-like operating systems: History, operating sy
 
   
   <script src="js/main.js"></script>
+<script type="text/javascript">
+  window.onload = function() {
+    Formio.createForm(document.getElementById('formio'), 'https://tfcaexsgoykqply.form.io/contact');
+  };
+</script>
     
   </body>
 </html>
