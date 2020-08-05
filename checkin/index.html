@@ -70,7 +70,7 @@
             getStatus();
         }, 10000);
         $("#submitbtn").click(function() {
-           $.getJSON('http://54.212.39.149/checkin/checkin.php?callback=?'+
+           $.getJSON('checkin.php?callback=?'+
                   '&email='+$("#inputEmail").val()+'&course='+$("#course").val(),
             function(res){
                 alert(res.messege);
@@ -91,7 +91,7 @@
         
     }
     function getStatus() {
-        $.getJSON('http://54.212.39.149/checkin/getstatus.php?callback=?',
+        $.getJSON('getstatus.php?callback=?',
                   'firstname=Jeff',
         function(res){
             $("#web1").text(res.web1);
