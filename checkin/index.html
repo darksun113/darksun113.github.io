@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <title>Dr. Gao Lab Check-in</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="floating-labels.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <form class="form-signin" action="#">
+      <div class="text-center mb-4">
+        <img class="mb-4" src="logo.png" alt="" width="237" height="77">
+        <h1 class="h3 mb-3 font-weight-normal">Check in</h1>
+        <table style="text-align: right">
+            <tr><td>Front-end Web Development (GH 205) <code id=web1>0</code> of 21</td></tr>  
+            <tr><td>Back-end Web Development (GH 205) <code id=web2>0</code> of 21</td></tr>
+            <tr><td>Mobile Computing (GH 205B) <code id=mobile>0</code> of 21</td></tr>
+        </table>
+      </div>
+
+      <div class="form-label-group">
+        <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputEmail">Email address</label>
+      </div>
+
+      <div class="form-label-group">
+        <select name="course" id="course" class="form-control" required>
+          <option value="web1">Front-end Web Development</option>
+          <option value="web2">Back-end Web Development</option>
+          <option value="mobile">Mobile Computing</option>
+        </select>
+      </div>
+
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me" id="remember"> Remember me
+        </label>
+      </div>
+        <input type="hidden" name="date" id="date" value="">
+      <button class="btn btn-lg btn-primary btn-block" type="submit" id="submitbtn">Check in</button>
+      <p class="mt-5 mb-3 text-muted text-center">&copy; by <a href="http://www.kell.vin">Kelvin Gao</a>. All Right Reserved, 2020-2021</p>
+    </form>
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+  <script>
+    $.ready = function() {
+        $(".form-signin").validate();
+        var remember = $.cookie('remember');
+        if ( remember == 'true' ) {
+            var email = $.cookie('email');
+            var course = $.cookie('course');
+            // autofill the fields
+            $('#inputEmail').attr("value", email);
+            $('#course').attr("value", course);
+        }
+        getStatus();
+        window.setInterval(function() {
+            getStatus();
+        }, 10000);
+        $("#submitbtn").click(function() {
+           $.getJSON('http://54.212.39.149/checkin/checkin.php?callback=?'+
+                  '&email='+$("#inputEmail").val()+'&course='+$("#course").val(),
+            function(res){
+                alert(res.messege);
+               getStatus();
+            });
+            if ($('#remember').attr('checked')) {
+              var email = $("#inputEmail").val();
+              var course = $("#course").val();
+              $.cookie('email',email, { expires: 14 });
+              $.cookie('course',course, { expires: 14 });
+              $.cookie('remember',true, { expires: 14 });
+            } else {
+              $.cookie('email',null);
+              $.cookie('course',null);
+              $.cookie('remember',null);
+            }
+        });
+        
+    }
+    function getStatus() {
+        $.getJSON('http://54.212.39.149/checkin/getstatus.php?callback=?',
+                  'firstname=Jeff',
+        function(res){
+            $("#web1").text(res.web1);
+            $("#web2").text(res.web2);
+            $("#mobile").text(res.mobile);
+        });
+    }
+  </script>
+</html>
